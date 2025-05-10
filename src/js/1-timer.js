@@ -1,7 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
-
 import 'izitoast/dist/css/iziToast.min.css';
 
 // Елементи інтерфейсу
@@ -61,17 +60,14 @@ function addLeadingZero(value) {
 
 // Оновлення інтерфейсу таймера
 function updateTimerUI({ days, hours, minutes, seconds }) {
-  daysEl.textContent = days;
+  daysEl.textContent = addLeadingZero(days);
   hoursEl.textContent = addLeadingZero(hours);
   minutesEl.textContent = addLeadingZero(minutes);
   secondsEl.textContent = addLeadingZero(seconds);
 }
 
-// Обробка натискання кнопки Start
-startBtn.addEventListener('click', () => {
-  startBtn.disabled = true;
-  input.disabled = true;
-
+// Запуск таймера
+function startTimer() {
   timerId = setInterval(() => {
     const now = new Date();
     const diff = userSelectedDate - now;
@@ -86,4 +82,11 @@ startBtn.addEventListener('click', () => {
     const timeData = convertMs(diff);
     updateTimerUI(timeData);
   }, 1000);
+}
+
+// Обробка натискання кнопки Start
+startBtn.addEventListener('click', () => {
+  startBtn.disabled = true;
+  input.disabled = true;
+  startTimer();
 });
